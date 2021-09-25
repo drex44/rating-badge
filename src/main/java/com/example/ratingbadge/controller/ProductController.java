@@ -4,6 +4,7 @@ import com.example.ratingbadge.dto.DefaultMapper;
 import com.example.ratingbadge.dto.ProductDto;
 import com.example.ratingbadge.dto.RatingDto;
 import com.example.ratingbadge.model.Product;
+import com.example.ratingbadge.model.Rating;
 import com.example.ratingbadge.service.ProductService;
 import com.example.ratingbadge.service.RecordNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +35,23 @@ public class ProductController {
         try {
             return productService.getAllRatings(productId)
                     .stream()
-                    .map(rating -> defaultMapper.toRating(rating))
+                    .map(rating -> defaultMapper.toRatingDto(rating))
                     .collect(Collectors.toList());
         } catch (RecordNotFoundException e) {
             log.info("Product not found with id {}", productId, e);
             return Collections.emptyList();
         }
+    }
+
+    @PostMapping("/{productId}/newRating")
+    public RatingDto addNewRating(@PathVariable UUID productId, @RequestBody RatingDto ratingDto) {
+        try {
+            Rating savedRating = productService.addRating(productId, defaultMapper.toRating(ratingDto));
+            return defaultMapper.toRatingDto(savedRating);
+        } catch (RecordNotFoundException e) {
+            log.info("Product not found with id {}", productId, e);
+        }
+        return null;
     }
 
     @PostMapping("/new")

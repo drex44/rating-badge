@@ -4,6 +4,7 @@ import com.example.ratingbadge.model.Product;
 import com.example.ratingbadge.model.Rating;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +13,8 @@ public interface DefaultMapper {
 
     Rating toRating(RatingDto dto);
 
-    RatingDto toRating(Rating rating);
+    @Mapping(source = "product.id", target = "productId")
+    RatingDto toRatingDto(Rating rating);
 
     Product toProduct(ProductDto productDto);
 
