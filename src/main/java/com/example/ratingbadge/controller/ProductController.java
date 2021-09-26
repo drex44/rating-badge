@@ -2,6 +2,7 @@ package com.example.ratingbadge.controller;
 
 import com.example.ratingbadge.dto.DefaultMapper;
 import com.example.ratingbadge.dto.ProductDto;
+import com.example.ratingbadge.dto.ProductSearchRequest;
 import com.example.ratingbadge.dto.RatingDto;
 import com.example.ratingbadge.model.Product;
 import com.example.ratingbadge.model.Rating;
@@ -43,13 +44,30 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/{productId}/newRating")
-    public RatingDto addNewRating(@PathVariable UUID productId, @RequestBody RatingDto ratingDto) {
+    @GetMapping("/{productId}")
+    public ProductDto getProduct(@PathVariable UUID productId) {
         try {
-            Rating savedRating = productService.addRating(productId, defaultMapper.toRating(ratingDto));
-            return defaultMapper.toRatingDto(savedRating);
+            Product product = productService.getProduct(productId);
+
+            return defaultMapper.toProductDto(product);
         } catch (RecordNotFoundException e) {
             log.info("Product not found with id {}", productId, e);
+        }
+        return null;
+    }
+
+    @PostMapping("/newRating")
+    public RatingDto addNewRating(@RequestBody RatingDto ratingDto) {
+        try {
+            if (ratingDto.getStars() > 5) {
+                log.debug("Invalid stars in new rating");
+                return null;
+            }
+            Rating savedRating = productService.addRating(defaultMapper.toRating(ratingDto));
+
+            return defaultMapper.toRatingDto(savedRating);
+        } catch (RecordNotFoundException e) {
+            log.info("Product not found with id {}", ratingDto.getProductId(), e);
         }
         return null;
     }
@@ -57,7 +75,17 @@ public class ProductController {
     @PostMapping("/new")
     public ProductDto addNewProduct(@RequestBody ProductDto product) {
         Product newProduct = productService.addNewProduct(defaultMapper.toProduct(product));
+
         return defaultMapper.toProductDto(newProduct);
+    }
+
+    @PostMapping("/query")
+    public List<ProductDto> getAllProducts(@RequestBody ProductSearchRequest searchRequest) {
+        List<Product> products = productService.getAllProducts(searchRequest);
+
+        return products.stream()
+                .map(product -> defaultMapper.toProductDto(product))
+                .collect(Collectors.toList());
     }
 
 }

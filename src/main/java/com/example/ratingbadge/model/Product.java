@@ -14,4 +14,5 @@ import javax.persistence.Table;
 public class Product extends BaseUUID {
     private String name;
     private String description;
+    private double avgStars;
 }

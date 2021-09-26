@@ -8,9 +8,10 @@ import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = ProductResolver.class)
 public interface DefaultMapper {
 
+    @Mapping(source = "productId", target = "product")
     Rating toRating(RatingDto dto);
 
     @Mapping(source = "product.id", target = "productId")
