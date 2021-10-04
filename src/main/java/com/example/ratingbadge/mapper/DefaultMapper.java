@@ -1,5 +1,7 @@
-package com.example.ratingbadge.dto;
+package com.example.ratingbadge.mapper;
 
+import com.example.ratingbadge.dto.ProductDto;
+import com.example.ratingbadge.dto.RatingDto;
 import com.example.ratingbadge.model.Product;
 import com.example.ratingbadge.model.Rating;
 import org.mapstruct.InjectionStrategy;
