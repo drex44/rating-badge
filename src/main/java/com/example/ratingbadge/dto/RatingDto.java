@@ -13,5 +13,5 @@ public class RatingDto {
     private UUID id;
     private UUID productId;
     private String review;
-    private int stars;
+    private float stars;
 }

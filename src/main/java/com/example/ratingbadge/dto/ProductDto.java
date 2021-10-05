@@ -11,5 +11,5 @@ public class ProductDto {
     private UUID id;
     private String name;
     private String description;
-    private double avgStars;
+    private float avgStars;
 }
