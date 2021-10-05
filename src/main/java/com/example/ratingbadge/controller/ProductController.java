@@ -73,7 +73,7 @@ public class ProductController {
                 log.debug("Product id is required");
                 return null;
             }
-            if (ratingDto.getStars() > 5) {
+            if (ratingDto.getStars() < 0 || ratingDto.getStars() > 5) {
                 log.debug("Invalid stars in new rating");
                 return null;
             }

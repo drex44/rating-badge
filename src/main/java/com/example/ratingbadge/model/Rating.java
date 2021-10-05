@@ -22,5 +22,5 @@ public class Rating extends BaseUUID {
     @Column(length = 300)
     private String review;
 
-    private int stars;
+    private float stars;
 }
