@@ -1,8 +1,8 @@
 # Rating-Badge
 Sample Spring boot project
 
-# Frontend
+## Frontend
 https://github.com/drex44/reviewfier
 
-# Deployed on heroku
+## Deployed on heroku
 https://reviewfier.herokuapp.com
