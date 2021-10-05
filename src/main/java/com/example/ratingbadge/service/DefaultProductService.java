@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,7 +40,7 @@ public class DefaultProductService implements ProductService {
 
     private void updateProductAvgStars(Product product) {
         Double avgStars = ratingRepository.avgRatingForProduct(product.getId());
-        product.setAvgStars(avgStars);
+        product.setAvgStars(BigDecimal.valueOf(avgStars).setScale(2, RoundingMode.HALF_UP).floatValue());
         productRepository.save(product);
     }
 
