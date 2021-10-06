@@ -21,12 +21,10 @@ public abstract class BaseUUID {
     @Type(type = "uuid-char")
     private UUID id;
 
-
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = ModelUtils.LONG_DATE_TIME_FORMAT)
     private Date createdOn;
-
 
     public BaseUUID() {
         this.id = UUID.randomUUID();
