@@ -8,6 +8,7 @@ import com.example.ratingbadge.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public class DefaultProductService implements ProductService {
             return StreamSupport.stream(productRepository.findAll().spliterator(), false)
                     .collect(Collectors.toList());
         }
-        Pageable queryParams = PageRequest.of(searchRequest.getPage(), searchRequest.getPageSize());
+        Pageable queryParams = PageRequest.of(searchRequest.getPage(), searchRequest.getPageSize(), Sort.by("createdOn").descending());
         return productRepository.findAll(queryParams).toList();
     }
 
